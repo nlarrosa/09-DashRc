@@ -8,6 +8,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import { FooterLayout, SideBar } from '../components/ui';
 import { NavBar } from '../components/ui';
+import { Route, Routes } from 'react-router-dom';
+import { DashPage } from '../pages/dashboard/DashPage';
 
 
 const defaultTheme = createTheme();
@@ -51,6 +53,11 @@ export function GeneralLayout() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             
+            <Routes>
+              <Route  path='/dashboard' element={<DashPage />} />
+              <Route  path='/*' element={<DashPage />} />
+            </Routes>
+
             <FooterLayout sx={{ pt: 4 }} />
           </Container>
         </Box>

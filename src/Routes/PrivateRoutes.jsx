@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Navigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 export const PrivateRoutes = ({ children }) => {
 
   //TODO: Aca devemos validar si el  usuario esta validado con el Context
-  const logged = false;
+  const { state } =  useContext(AuthContext);
 
 
-  return (logged)
+  return (state.isLogged)
     ? children
     : <Navigate to='/auth/login' />
 }

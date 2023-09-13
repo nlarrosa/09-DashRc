@@ -7,11 +7,19 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { AppBar } from "./AppBar";
+import { Button } from "@mui/material";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 
 
 export const NavBar = ({ toggleDrawer, open }) => {
 
+  const { logout } = useContext(AuthContext);
+
+  const onClickLogout = () => {
+    logout();
+  }
 
   return (
     <AppBar position="absolute" open={open}>
@@ -41,6 +49,15 @@ export const NavBar = ({ toggleDrawer, open }) => {
         >
           Dashboard
         </Typography>
+        <Button 
+          variant="contained" 
+          size="small" 
+          color="info"
+          sx={{ mr: 3, border: '1px solid #fff'}}
+          onClick={onClickLogout}
+        >
+          Logout
+        </Button>
         <IconButton color="inherit">
           <Badge badgeContent={4} color="secondary">
             <NotificationsIcon />
