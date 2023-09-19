@@ -1,7 +1,11 @@
-export const types = {
-    auth:{
-        login:       'LOGIN',
-        logout:      'LOGOUT',
-        register:    'REGISTER'
+export const types =  {
+
+    auth: {
+        onLogin:   '[AUTH] - LOGIN',
+        onLogout:  '[AUTH] - LOGOUT',
+    },
+
+    user: {
+        
     }
 }

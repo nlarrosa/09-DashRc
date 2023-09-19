@@ -11,18 +11,21 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-
+import { FormHelperText } from '@mui/material';
 import { AuthContext } from '../../contexts/AuthContext';
+import { useForm } from '../../hooks/useForm';
+
+
 
 
 export const LoginPage = () => {
 
-  const { login } = useContext(AuthContext);
+    const { login, state } = useContext(AuthContext);
+    const { formState, onInputChange } = useForm();
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        login();
-        
+        login(formState.email, formState.password);
     };
 
 
@@ -37,6 +40,7 @@ export const LoginPage = () => {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
+              error={state.errorMessage.length > 0 ?  true : false}
               margin="normal"
               required
               fullWidth
@@ -45,8 +49,10 @@ export const LoginPage = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={ (event ) => onInputChange(event) }
             />
             <TextField
+              error={state.errorMessage.length > 0 ?  true : false}
               margin="normal"
               required
               fullWidth
@@ -55,7 +61,14 @@ export const LoginPage = () => {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={ (event ) => onInputChange(event) }
             />
+            <FormHelperText 
+              id="component-helper-text"
+              sx={{ color:'red' }}
+            >
+              { state.errorMessage }
+            </FormHelperText>
             <Button
               type="submit"
               fullWidth

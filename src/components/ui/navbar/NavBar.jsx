@@ -13,9 +13,11 @@ import { AuthContext } from "../../../contexts/AuthContext";
 
 
 
+
+
 export const NavBar = ({ toggleDrawer, open }) => {
 
-  const { logout } = useContext(AuthContext);
+  const { logout } = useContext( AuthContext );
 
   const onClickLogout = () => {
     logout();

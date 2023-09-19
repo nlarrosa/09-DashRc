@@ -1,9 +1,8 @@
-import axios from "axios";
-
+import axios from 'axios';
 
 
 export const dashAxios = axios.create({
-    baseURL: 'http://efactor.com/api/v1/',
+    baseURL: 'http://localhost:3030/api/',
     timeout: 12000,
     headers: {
 
