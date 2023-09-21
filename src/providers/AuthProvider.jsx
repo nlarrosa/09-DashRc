@@ -7,7 +7,8 @@ import { dashAxios } from "../config/DashRcAxios";
 const initialState =  {
     user: null,
     isLogged: false,
-    errorMessage: ''
+    errorMessage: '',
+    isLoading: true,
 }
 
 
@@ -24,7 +25,7 @@ export const AuthProvider = ({ children }) =>  {
                 password
             });
 
-            //TODO: guardar el token en el storage
+            localStorage.setItem('tokenRc', data.res.token);
     
             dispatch({
                 type:  types.auth.onLogin,
@@ -34,32 +35,73 @@ export const AuthProvider = ({ children }) =>  {
             });
         } catch (error) {
             const { data }  = error.response
-
+            
             dispatch({
                 type: types.auth.onLogout,
                 payload: {
                     errorMessage: data.msg
                 }
             })
-
         }
-        
-
     }
-
-
+    
+    
     const logout = () => {
+        
+        localStorage.clear();
 
         dispatch({
-            type: types.auth.onLogout
+            type: types.auth.onLogout,
+            payload: {
+                errorMessage: ''
+            }
         });
     }
+
+
+    const checkAuthToken = async () => {
+
+        try {
+            const token = localStorage.getItem('tokenRc');
+            if(!token){
+                return dispatch({
+                    type: types.auth.onLogout,
+                    payload: {
+                        errorMessage: ''
+                    }
+                });
+            }
+
+            const { data } = await dashAxios.get('auth/user/review/token');
+            localStorage.setItem('tokenRc', data.res.token);
+
+            dispatch({
+                type:  types.auth.onLogin,
+                payload: {
+                    user: data.res
+                }
+            });
+            
+        } catch (error) {
+            localStorage.clear();
+            dispatch({
+                type: types.auth.onLogout,
+                payload: {
+                    errorMessage: ''
+                }
+            });
+        }
+    }
+
+
+    
 
     return (
         <AuthContext.Provider value={{
             state,
             login,
-            logout
+            logout,
+            checkAuthToken,
         }}>
             { children }
         </AuthContext.Provider>

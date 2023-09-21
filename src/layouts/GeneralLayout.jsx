@@ -10,6 +10,7 @@ import { FooterLayout, SideBar } from '../components/ui';
 import { NavBar } from '../components/ui';
 import { Route, Routes } from 'react-router-dom';
 import { DashPage } from '../pages/dashboard/DashPage';
+import { Error404Page } from '../pages/error/Error404Page';
 
 
 const defaultTheme = createTheme();
@@ -55,7 +56,7 @@ export function GeneralLayout() {
             
             <Routes>
               <Route  path='/dashboard' element={<DashPage />} />
-              <Route  path='/*' element={<DashPage />} />
+              <Route  path='/*' element={<Error404Page />} />
             </Routes>
 
             <FooterLayout sx={{ pt: 4 }} />
