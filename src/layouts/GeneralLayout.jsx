@@ -11,6 +11,8 @@ import { NavBar } from '../components/ui';
 import { Route, Routes } from 'react-router-dom';
 import { DashPage } from '../pages/dashboard/DashPage';
 import { Error404Page } from '../pages/error/Error404Page';
+import { UserPage } from '../pages/user/UserPage';
+import { ProductsPage } from '../pages/products/ProductsPage';
 
 
 const defaultTheme = createTheme();
@@ -56,6 +58,8 @@ export function GeneralLayout() {
             
             <Routes>
               <Route  path='/dashboard' element={<DashPage />} />
+              <Route  path='/usuarios' element={<UserPage />} />
+              <Route  path='/productos' element={<ProductsPage />} />
               <Route  path='/*' element={<Error404Page />} />
             </Routes>
 
