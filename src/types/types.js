@@ -6,6 +6,10 @@ export const types =  {
     },
 
     user: {
-        
+        getUsers:   '[USERS] - USERS ALL',
+        getUser:    '[USERS] - USER BY ID',
+        editUser:   '[USERS] - USER UPDATE',
+        deleteUser: '[USERS] - USER DELETE',
+        messages:   '[USERS] - USER ERROR MESSAGE'
     }
 }
