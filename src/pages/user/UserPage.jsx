@@ -4,6 +4,8 @@ import { Box, Grid, IconButton, Paper } from '@mui/material';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import Swal from 'sweetalert2'
+
 import { UserContext } from '../../contexts/UserContext';
 
 const rows = [
@@ -21,6 +23,17 @@ export const UserPage = () => {
   useEffect( () => {
     getUsers(page);
   }, []);
+
+  const onAlterDelete = (id) => {
+
+    Swal.fire({
+      title: 'Error!',
+      text: 'Do you want to continue',
+      icon: 'error',
+      confirmButtonText: 'Cool'
+    })
+
+  }
 
   const columns = [
   
@@ -86,9 +99,9 @@ export const UserPage = () => {
               />
             </IconButton>
             <IconButton
-              aria-label='Ver Comunicacion'
+              aria-label='Elimiinar Usuario'
               color='info'
-              // onClick={() => handleGeneratePreview(row.comunicacionId)}
+              onClick={() => onAlterDelete(row.id)}
             >
               <DeleteOutlineIcon
                 fontSize='medium'

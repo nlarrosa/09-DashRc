@@ -24,7 +24,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "recharts": "^2.8.0",
-    "styled-components": "^5.3.11"
+    "styled-components": "^5.3.11",
+    "sweetalert2": "^11.7.31"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",
