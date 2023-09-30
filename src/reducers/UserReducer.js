@@ -14,8 +14,8 @@ export const UserReducer = (state, action) => {
 
         case types.user.Messages:
             return {
-                status: action.payload.messageStatus,
-                msg: action.payload.message,
+              isLoading: false,
+              msg: action.payload.message,
             }
     
         default: state;

@@ -7,33 +7,25 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import Swal from 'sweetalert2'
 
 import { UserContext } from '../../contexts/UserContext';
+import { useSweet } from '../../hooks/useSweet';
 
-const rows = [
-  { id: 1, name: 'Nicolas Larrosa', email: 'nicolas@gmail.com', is_active: true, created_at: '09-11-2023' },
-];
+
 
 
 
 export const UserPage = () => {
 
-  const [pageSize, setPageSize] = useState(3);
+  const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(0);
   const { state, getUsers, isLoading } = useContext(UserContext);
+
+  const { onDeleteSweet } = useSweet();
 
   useEffect( () => {
     getUsers(page);
   }, []);
 
-  const onAlterDelete = (id) => {
-
-    Swal.fire({
-      title: 'Error!',
-      text: 'Do you want to continue',
-      icon: 'error',
-      confirmButtonText: 'Cool'
-    })
-
-  }
+  
 
   const columns = [
   
@@ -101,7 +93,7 @@ export const UserPage = () => {
             <IconButton
               aria-label='Elimiinar Usuario'
               color='info'
-              onClick={() => onAlterDelete(row.id)}
+              onClick={() => onDeleteSweet(row.id)}
             >
               <DeleteOutlineIcon
                 fontSize='medium'
@@ -126,7 +118,7 @@ export const UserPage = () => {
               checkboxSelection
               rows={state.users} 
               columns={columns} 
-              paginationMode='server'
+              paginationMode='client'
               pageSize={pageSize}
               page={page}
               rowsPerPageOptions={[10, 25, 50]}
