@@ -1,11 +1,13 @@
 
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 
 
 export const PrivateRoutes = ({ children, isLogged}) => {
 
+  const { pathname  } = useLocation();
+  localStorage.setItem('lastRoute', pathname);
 
   return (isLogged)
     ? children

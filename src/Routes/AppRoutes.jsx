@@ -13,11 +13,11 @@ export const AppRoutes = () => {
 
     useEffect( () => {
         checkAuthToken();
-    }, [])
+    }, []);
 
-    // if(state.isLoading){
-    //     return (<Loading />);
-    // }
+    if(state.isLoading){
+        return (<Loading />);
+    }
 
   return (
     <>

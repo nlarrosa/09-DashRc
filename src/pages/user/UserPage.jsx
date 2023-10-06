@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Grid, IconButton, Paper } from '@mui/material';
+import { Box, Button, Grid, IconButton, Paper, Skeleton, Typography } from '@mui/material';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import Swal from 'sweetalert2'
 
 import { UserContext } from '../../contexts/UserContext';
-import { useSweet } from '../../hooks/useSweet';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -17,15 +16,61 @@ export const UserPage = () => {
 
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(0);
-  const { state, getUsers, isLoading } = useContext(UserContext);
+  const { state, getUsers, deleteUser,  activeUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  const { onDeleteSweet } = useSweet();
 
   useEffect( () => {
     getUsers(page);
   }, []);
 
   
+  const getButtonsActions = (row) => {
+
+    return (
+      <>
+        {  row.is_active && (
+          <IconButton
+            disabled={ !row.is_active }
+            color='info'
+            title='Editar'
+            onClick={() => navigate(`/usuarios/editar/${row.id}`)}
+          >
+            <DriveFileRenameOutlineIcon
+              fontSize='medium'
+              color={row.is_active ? 'info' : 'disabled'}
+            />
+          </IconButton>
+        )}
+
+        {  row.is_active && (
+          <IconButton
+            disabled={ !row.is_active }
+            color={row.is_active ? 'info' : 'disabled'}
+            onClick={() => deleteUser(row.id)}
+            title='Deshabilitar Usuario'
+          >
+            <DeleteOutlineIcon
+              fontSize='medium'
+              color={row.is_active ? 'info' : 'disabled'}
+            />
+          </IconButton>
+        )}
+
+        {  !row.is_active && (
+          <Button 
+            variant="outlined" 
+            size='small'
+            color='info'
+            onClick={() => activeUser(row.id)}
+            sx={{ fontSize: 12}}
+          >
+            Activar
+          </Button>
+        )}
+      </>
+    )
+  }
 
   const columns = [
   
@@ -44,20 +89,20 @@ export const UserPage = () => {
     {
       flex: 0.1,
       field: 'is_active',
-      headerName: 'Estado',
+      headerName: 'Activo',
       minWidth: 100,
       renderCell: ({ row }) => {
         return (
           <Box>
             <IconButton
-              aria-label='Estado'
+              aria-label='Usuario Activo'
               color='info'
               disabled={true}
             >
               <DoneAllIcon
                 fontSize='medium'
                 sx={{ mr: 2 }}
-                color={(true) ? 'success' : 'disabled'}
+                color={(row.is_active) ? 'success' : 'disabled'}
               />
             </IconButton>
           </Box>
@@ -80,42 +125,39 @@ export const UserPage = () => {
       renderCell: ({ row }) => {
         return (
           <Box>
-            <IconButton
-              aria-label='Ver Comunicacion'
-              color='info'
-              // onClick={() => handleGeneratePreview(row.comunicacionId)}
-            >
-              <DriveFileRenameOutlineIcon
-                fontSize='medium'
-                color={'info'}
-              />
-            </IconButton>
-            <IconButton
-              aria-label='Elimiinar Usuario'
-              color='info'
-              onClick={() => onDeleteSweet(row.id)}
-            >
-              <DeleteOutlineIcon
-                fontSize='medium'
-                color={'info'}
-              />
-            </IconButton>
+            {getButtonsActions(row)}
           </Box>
         )
       }
     },
   ];
 
+
+
+
+
     
   return (
     <Grid container spacing={3}>
+      <Grid item xs={12} sx={{  
+              marginLeft: 3, 
+          }}
+      >
+          <Typography 
+            variant='h5' 
+            fontFamily={'fantasy'}
+          >
+            Lista Usuarios
+          </Typography>
+      </Grid>
       <Grid item xs={12} md={12}>
         <Paper>
           <div style={{ width: '100%' }}>
             <DataGrid 
-              loading={isLoading}
+              // className='animate__animated animate__fadeIn'
+              loading={state.isLoading}
               autoHeight
-              checkboxSelection
+              // checkboxSelection
               rows={state.users} 
               columns={columns} 
               paginationMode='client'

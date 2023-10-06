@@ -13,6 +13,7 @@ import { DashPage } from '../pages/dashboard/DashPage';
 import { Error404Page } from '../pages/error/Error404Page';
 import { UserPage } from '../pages/user/UserPage';
 import { ProductsPage } from '../pages/products/ProductsPage';
+import { EditUserPage } from '../pages/user/EditUserPage';
 
 
 const defaultTheme = createTheme();
@@ -59,7 +60,9 @@ export function GeneralLayout() {
             <Routes>
               <Route  path='/dashboard' element={<DashPage />} />
               <Route  path='/usuarios' element={<UserPage />} />
+              <Route  path='/usuarios/editar/:id' element={<EditUserPage />} />
               <Route  path='/productos' element={<ProductsPage />} />
+              <Route  path='/' element={<DashPage />} />
               <Route  path='/*' element={<Error404Page />} />
             </Routes>
 
